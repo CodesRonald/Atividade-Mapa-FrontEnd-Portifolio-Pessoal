@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <!-- Define a codificação de caracteres como UTF-8 para suportar acentuação-->
+    <meta charset="UTF-8">
+    <!-- Responsividade para diferentes dispositivos  controla zoom, escala e compatibilidade-->
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover, user-scalable=no">
+    <!-- Ícone da aba do navegador -->
+    <link rel="shortcut icon" href="img/favicon-icon-portifólio.jpg" type="image/x-icon">
+    <!-- Título da página -->
+    <title>Projetos - Ronald de Souza Verola</title>
+    <!-- Estilos CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    <!-- Script JavaScript (defer garante carregamento após o HTML) -->
+    <script defer src="js/javascript.js"></script>
+    <!-- Biblioteca de ícones Font Awesome - Ícones -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+</head>
+
+<body>
+    <!--Cabeçalho e Navegação-->
+    <header id="header">
+        <div class="container">
+            <nav>
+                <!-- Logotipo com link para seção principal -->
+                <a href="#" class="logo" onclick="showSection('hero')">Portifólio Ronald</a>
+                <!-- Botão do menu mobile -->
+                <button id="menu-toggle" class="menu-toggle" aria-label="Abrir menu">
+                    <div class="hamburger-icon">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                </button>
+                <!-- Navegação principal -->
+                <ul id="nav-menu">
+                    <li><a href="index.html" onclick="showSection('hero')">Início</a></li>
+                    <li><a href="sobre.html" onclick="showSection('about')">Sobre</a></li>
+                    <li><a href="projetos.html" onclick="showSection('projects')">Projetos</a></li>
+                    <li><a href="contato.html" onclick="showSection('contact')">Contato</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <!-- Conteúdo principal da página -->
+    <main>
+        <!-- Seção de projetos com título e cards -->
+        <section id="projects" class="section-projects active">
+            <!-- Título da seção -->
+            <h2 class="section-title">Projetos</h2>
+            <!-- Grid responsivo contendo os cards de projeto -->
+            <div class="projects-grid container">
+                <!-- Card do Projeto 1 -->
+                <div class="project-card">
+                    <!-- Imagem do projeto com figura semântica do projeto portifólio pessoal-->
+                    <div class="project-image">
+                        <div class="profile-img with-photo-project">
+                            <img src="img/Portifólio Pessoal.jpg" alt="Foto escrita portifólio pessoal"
+                                class="profile-photo-project">
+                        </div>
+                    </div>
+                    <!-- Informações do projeto -->
+                    <div class="project-info">
+                        <h3><a href="https://codesronald.github.io/Atividade-Mapa-FrontEnd-Portifolio-Pessoal/"
+                                class="a-links-project" target="_blank">Portfólio Pessoal</a></h3>
+                        <p>Site muito responsivo onde apresento quem sou e os projetos e habilidades que possuo.</p>
+                        <div class="project-tech">
+                            <span class="tech-tag">HTML</span>
+                            <span class="tech-tag">CSS</span>
+                            <span class="tech-tag">JavaScript</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Card do Projeto 2 -->
+                <div class="project-card">
+                    <!-- Imagem do projeto com figura semântica do projeto Cordel-->
+                    <div class="project-image">
+                        <div class="profile-img with-photo-project">
+                            <img src="img/projeto cordel.jpg"
+                                alt="foto projeto coredél feito para o desafio do curso em video"
+                                class="profile-photo-project">
+                        </div>
+                    </div>
+                    <!-- Informações do projeto cordel-->
+                    <div class="project-info">
+                        <h3><a href="https://codesronald.github.io/Projeto-Cordel/" class="a-links-project"
+                                target="_blank">Projeto Cordel</a></h3>
+                        <p>Site Responsivo que fiz com base no desafio do Curso em Video do Professor Gustavo Guanabara
+                            do curso de HTML5, CSS3 que focava recriar um site focado em uma poesia de Milton Duarte
+                            Cordel Moderno</p>
+                        <!-- Tecnologias utilizadas -->
+                        <div class="project-tech">
+                            <span class="tech-tag">HTML5</span>
+                            <span class="tech-tag">CSS3</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Card do Projeto 3 -->
+                <div class="project-card">
+                    <!-- Imagem do projeto com figura semântica do projeto android-->
+                    <div class="project-image">
+                        <div class="profile-img with-photo-project">
+                            <img src="img/Projeto android.jpg"
+                                alt="Foto escrita projeto android que redireciona para a pagina que foi feita para o desafio do curso em video"
+                                class="profile-photo-project">
+                        </div>
+                    </div>
+                    <!-- Informações do projeto android-->
+                    <div class="project-info">
+                        <h3><a href="https://codesronald.github.io/Projeto-Android/" class="a-links-project"
+                                target="_blank">Projeto Android</a></h3>
+                        <p>Site responsivo que fiz no desafio do Curso em video do Professor Gustavo Guanabara do curso
+                            de HTML5 e CSS3 onde apresenta-se a historia do android e seu mascote o bugdroid </p>
+                        <div class="project-tech">
+                            <!-- Tecnologias utilizadas -->
+                            <span class="tech-tag">HTML5</span>
+                            <span class="tech-tag">CSS3</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div> <!-- Fim da grid de projetos -->
+        </section> <!-- Fim da seção de projetos -->
+    </main>
+
+    <!-- Rodapé -->
+    <footer>
+        <p class="p-footer">© 2025 <a href="https://github.com/CodesRonald" class="a-links" target="_blank">Ronald de
+                Souza Verola</a>. Todos os direitos reservados.</p>
+    </footer>
+</body>
+
+</html>

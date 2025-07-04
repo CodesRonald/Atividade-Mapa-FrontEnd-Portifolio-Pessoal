@@ -1,0 +1,76 @@
+<!-- Documento HTML5 - Página inicial do portfólio -->
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <!-- Define a codificação de caracteres como UTF-8 para suportar acentuação-->
+    <meta charset="UTF-8">
+    <!-- Responsividade para diferentes dispositivos  controla zoom, escala e compatibilidade-->
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover, user-scalable=no">
+    <!-- Ícone da aba do navegador -->
+    <link rel="shortcut icon" href="img/favicon-icon-portifólio.jpg" type="image/x-icon">
+    <!-- Título da página -->
+    <title>Portfólio Ronald de Souza Verola</title>
+    <!-- Estilos CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    <!-- Script JavaScript (defer garante carregamento após o HTML) -->
+    <script defer src="js/javascript.js"></script>
+    <!-- Biblioteca de ícones Font Awesome - Ícones -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+</head>
+
+<body>
+    <!--Cabeçalho e Navegação-->
+    <header id="header">
+        <div class="container">
+            <nav>
+                <!-- Logotipo com link para seção principal -->
+                <a href="#" class="logo" onclick="showSection('hero')">Portifólio Ronald</a>
+                <!-- Botão do menu mobile -->
+                <button id="menu-toggle" class="menu-toggle" aria-label="Abrir menu">
+                    <div class="hamburger-icon">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                </button>
+                <!-- Navegação principal -->
+                <ul id="nav-menu">
+                    <li><a href="index.html" onclick="showSection('hero')">Início</a></li>
+                    <li><a href="sobre.html" onclick="showSection('about')">Sobre</a></li>
+                    <li><a href="projetos.html" onclick="showSection('projects')">Projetos</a></li>
+                    <li><a href="contato.html" onclick="showSection('contact')">Contato</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <!--Seção Principal-->
+    <main>
+        <section id="hero" class="hero active">
+            <div class="hero-content container">
+                <h1>Ronald de Souza Verola</h1>
+                <p class="subtitle">Estudante de Engenharia de Software</p>
+                <p class="description">Olá, meu nome é Ronald de Souza Verola, sou um estudante de Engenharia de
+                    Software e gosto de criar experiências digitais. Possuo algumas habilidades em HTML, CSS e
+                    JavaScript, e estou sempre em busca de novos desafios e oportunidades para aprimorar minhas
+                    habilidades.</p>
+                <!-- Botões de chamada para ação (CTA) -->
+                <div class="cta-buttons">
+                    <a href="#" class="btn btn" onclick="loadPartial('projetos.html','projects')">Meus Projetos</a>
+                    <a href="#" class="btn" onclick="loadPartial('contato.html', 'contact')">Contato</a>
+                </div>
+            </div>
+        </section>
+        <div id="dynamic-container">
+            <!-- Conteúdo dinâmico carregado aqui -->
+        </div>
+    </main>
+    <!-- Rodapé -->
+    <footer>
+        <p class="p-footer">© 2025 <a href="https://github.com/CodesRonald" class="a-links" target="_blank">Ronald de
+                Souza Verola</a>. Todos os direitos reservados.</p>
+    </footer>
+</body>
+
+</html>

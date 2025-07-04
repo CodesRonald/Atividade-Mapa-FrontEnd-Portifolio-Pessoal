@@ -1,0 +1,162 @@
+<!--Documento HTML5 - Contato-->
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <!-- Define a codificação de caracteres como UTF-8 para suportar acentuação-->
+    <meta charset="UTF-8">
+    <!-- Responsividade para diferentes dispositivos  controla zoom, escala e compatibilidade-->
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover, user-scalable=no">
+    <!-- Ícone da aba do navegador -->
+    <link rel="shortcut icon" href="img/favicon-icon-portifólio.jpg" type="image/x-icon">
+    <!-- Título da página -->
+    <title>Contato - Ronald de Souza Verola</title>
+    <!-- Estilos CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    <!-- Script JavaScript (defer garante carregamento após o HTML) -->
+    <script defer src="js/javascript.js"></script>
+    <!-- Biblioteca de ícones Font Awesome - Ícones -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+</head>
+
+<body>
+    <!--Cabeçalho e Navegação-->
+    <header id="header">
+        <div class="container">
+            <nav>
+                <!-- Logotipo com link para seção principal -->
+                <a href="#" class="logo" onclick="showSection('hero')">Portifólio Ronald</a>
+                <!-- Botão do menu mobile -->
+                <button id="menu-toggle" class="menu-toggle" aria-label="Abrir menu">
+                    <div class="hamburger-icon">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                </button>
+                <!-- Navegação principal -->
+                <ul id="nav-menu">
+                    <li><a href="index.html" onclick="showSection('hero')">Início</a></li>
+                    <li><a href="sobre.html" onclick="showSection('about')">Sobre</a></li>
+                    <li><a href="projetos.html" onclick="showSection('projects')">Projetos</a></li>
+                    <li><a href="contato.html" onclick="showSection('contact')">Contato</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <!--Seção de Contato-->
+    <main>
+        <section id="contact" class="contact active">
+            <h2 class="section-title">Contato</h2>
+            <div class="contact-content container">
+                <!-- Informações de contato: Email, WhatsApp, Localização, instagram, Linkedin e GitHub -->
+                <div class="contact-info">
+                    <!-- Email -->
+                    <div class="contact-item-email">
+                        <a href="mailto:ronald.official.contact@gmail.com" class="a-incon" target="_blank"><i
+                                class="fas fa-envelope"></i></a>
+                        <div>
+                            <h4>Email</h4>
+                            <p><a href="mailto:ronald.official.contact@gmail.com" class="a-links"
+                                    target="_blank">ronald.official.contact@gmail.com</a></p>
+                        </div>
+                    </div>
+                    <!-- Telefone/WhatsApp -->
+                    <div class="contact-item-whatsapp">
+                        <a href="https://wa.me/5535992737294" class="a-incon" target="_blank"><i
+                                class="fab fa-whatsapp"></i></a>
+                        <div>
+                            <h4>Telefone / Whatsapp</h4>
+                            <p><a href="https://wa.me/5535992737294" class="a-links" target="_blank"> +55 (35)
+                                    99273-7294</a></p>
+                        </div>
+                    </div>
+                    <!-- Localização -->
+                    <div class="contact-item-localization">
+                        <a href="https://maps.app.goo.gl/xW1EEjtdcbbLpCZ37" class="a-incon" target="_blank"><i
+                                class="fas fa-map-marker-alt"></i></a>
+                        <div>
+                            <h4>Localização</h4>
+                            <p><a href="https://maps.app.goo.gl/xW1EEjtdcbbLpCZ37" class="a-links" target="_blank">Minas
+                                    Gerais, Brasil</a></p>
+                        </div>
+                    </div>
+                    <!-- Instagram -->
+                    <div class="contact-item-instagram">
+                        <a href="https://www.instagram.com/ronald__.oficial/" class="a-incon" target="_blank"><i
+                                class="fab fa-instagram"></i></a>
+                        <div>
+                            <h4>Instagram</h4>
+                            <p><a href="https://www.instagram.com/ronald__.oficial/" class="a-links"
+                                    target="_blank">ronald__.oficial</a></p>
+                        </div>
+                    </div>
+                    <!-- LinkedIn -->
+                    <div class="contact-item-linkedin">
+                        <a href="https://www.linkedin.com/in/ronald-verola/" class="a-incon" target="_blank"><i
+                                class="fab fa-linkedin"></i></a>
+                        <div>
+                            <h4>LinkedIn</h4>
+                            <p><a href="https://www.linkedin.com/in/ronald-verola/" class="a-links"
+                                    target="_blank">ronald-verola</a></p>
+                        </div>
+                    </div>
+                    <!-- GitHub -->
+                    <div class="contact-item-github">
+                        <a href="https://github.com/CodesRonald" class="a-incon" target="_blank"><i
+                                class="fab fa-github"></i></a>
+                        <div>
+                            <h4>GitHub</h4>
+                            <p><a href="https://github.com/CodesRonald" class="a-links" target="_blank">CodesRonald</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <!--Formulário de Contato-->
+                <form id="contact-form" class="contact-form" novalidate>
+                    <!-- Nome -->
+                    <div class="form-group">
+                        <label for="name">Nome</label>
+                        <input type="text" id="name" placeholder="Seu nome" />
+                        <div id="name-error" class="error-message">Por favor, insira seu nome.</div>
+                    </div>
+                    <!-- Email -->
+                    <div class="form-group">
+                        <label for="email">E-mail</label>
+                        <input type="email" id="email" placeholder="seu@email.com" />
+                        <div id="email-error" class="error-message">Por favor, insira um e-mail válido.</div>
+                    </div>
+                    <!-- Telefone/Whatsapp -->
+                    <div class="form-group">
+                        <label for="phone">Telefone / Whatsapp</label>
+                        <input type="phone" id="phone" placeholder="Formato: (xx) xxxxx-xxxx"
+                            pattern="\(\d{2}\) \d{5}-\d{4}" />
+                        <div id="phone-error" class="error-message">Por favor, informe um telefone válido.</div>
+                    </div>
+                    <!-- Assunto e Mensagem -->
+                    <div class="form-group">
+                        <label for="subject">Assunto</label>
+                        <input type="text" id="subject" placeholder="Assunto da mensagem" />
+                        <div id="subject-error" class="error-message">Por favor, insira o assunto.</div>
+                    </div>
+                    <!-- Mensagem -->
+                    <div class="form-group">
+                        <label for="message">Mensagem</label>
+                        <textarea id="message" rows="5" placeholder="Sua mensagem"></textarea>
+                        <div id="message-error" class="error-message">Por favor, insira uma mensagem.</div>
+                    </div>
+                    <!-- Botão de envio -->
+                    <button type="submit" class="btn">Enviar</button>
+                </form>
+            </div>
+        </section>
+    </main>
+    <!-- Rodapé -->
+    <footer>
+        <p class="p-footer">© 2025 <a href="https://github.com/CodesRonald" class="a-links" target="_blank">Ronald de
+                Souza Verola</a>. Todos os direitos reservados.</p>
+    </footer>
+</body>
+
+</html>

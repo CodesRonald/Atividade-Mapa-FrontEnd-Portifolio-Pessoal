@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <!-- Define a codificação de caracteres como UTF-8 para suportar acentuação -->
+    <meta charset="UTF-8">
+    <!-- Responsividade para diferentes dispositivos  controla zoom, escala e compatibilidade -->
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover, user-scalable=no">
+    <!-- Ícone da aba do navegador -->
+    <link rel="shortcut icon" href="img/favicon-icon-portifólio.jpg" type="image/x-icon">
+    <!-- Título da página -->
+    <title>Sobre - Ronald de Souza Verola</title>
+    <!-- Estilos CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    <!-- Script JavaScript (defer garante carregamento após o HTML) -->
+    <script defer src="js/javascript.js"></script>
+    <!-- Biblioteca de ícones Font Awesome - Ícones -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+</head>
+
+<body>
+    <!-- Cabeçalho e Navegação -->
+    <header id="header">
+        <div class="container">
+            <nav>
+                <!-- Logotipo com link para seção principal -->
+                <a href="#" class="logo" onclick="showSection('hero')">Portifólio Ronald</a>
+                <!-- Botão do menu mobile -->
+                <button id="menu-toggle" class="menu-toggle" aria-label="Abrir menu">
+                    <div class="hamburger-icon">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                </button>
+                <!-- Navegação principal -->
+                <ul id="nav-menu">
+                    <li><a href="index.html" onclick="showSection('hero')">Início</a></li>
+                    <li><a href="sobre.html" onclick="showSection('about')">Sobre</a></li>
+                    <li><a href="projetos.html" onclick="showSection('projects')">Projetos</a></li>
+                    <li><a href="contato.html" onclick="showSection('contact')">Contato</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <!-- Conteúdo principal da página -->
+    <main>
+        <!-- Seção Sobre mim com título e conteúdo -->
+        <section id="about" class="about active">
+            <!-- Título da seção -->
+            <h2 class="section-title">Sobre mim</h2>
+            <div class="about-content container">
+                <div class="about-grid">
+                    <!-- Imagem/foto de perfil do autor -->
+                    <div class="about-image">
+                        <div class="profile-img with-photo">
+                            <img src="img/foto-perfil-ronald.jpg" alt="Ronald de Souza Verola" class="profile-photo">
+                        </div>
+                    </div>
+                    <!-- Texto de apresentação do autor -->
+                    <div class="about-text">
+                        <h3>Ronald de Souza Verola</h3>
+                        <p>
+                            Apenas um estudante de engenharia de software que gosta bastante de Tecnologia e que ainda é
+                            iniciante no mundo da programaçãoe que tem uma experiencia ou outra com HTML5, CSS3 e
+                            JavaScript . Almejo aprender continuamente sobre o mercado de software e um dia chegar em um
+                            nivel onde eu possa compartilhar experiências, colaborar em projetos e me tornar um bom
+                            Programador/ desenvolvedor front-end que cria interfaces modernas e acessíveis e através
+                            disso transformar ideias em soluções reais.</p>
+                        <!-- Lista de habilidades do autor -->
+                        <div class="skills">
+                            <div class="skill-item">HTML</div>
+                            <div class="skill-item">CSS</div>
+                            <div class="skill-item">JavaScript</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Rodapé -->
+    <footer>
+        <p class="p-footer">© 2025 <a href="https://github.com/CodesRonald" class="a-links" target="_blank">Ronald de
+                Souza Verola</a>. Todos os direitos reservados.</p>
+    </footer>
+</body>
+
+</html>

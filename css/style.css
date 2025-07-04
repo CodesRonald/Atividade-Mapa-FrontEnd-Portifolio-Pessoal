@@ -1,0 +1,2395 @@
+/* Define o conjunto de caracteres do arquivo como UTF-8, garantindo compatibilidade com acentos e caracteres especiais. */
+@charset "UTF-8";
+
+/* --- RESET BÁSICO E ESTILOS GLOBAIS --- */
+
+/* Este é um reset basico/universal de CSS.
+  - margin: 0; e padding: 0; removem os espaçamentos padrão que os navegadores aplicam.
+  - box-sizing: border-box; muda o cálculo do tamanho dos elementos, fazendo com que o padding e a borda não aumentem a largura e altura final da caixa.
+*/
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Evita o zoom automático em campos de formulário em dispositivos móveis.
+  Navegadores como o Safari no iOS dão zoom em inputs se o tamanho da fonte for menor que 16px. Esta regra previne isso.
+*/
+/* Evita zoom automático em inputs no mobile */
+input,
+textarea,
+select {
+    font-size: 16px !important;
+}
+
+/* Estilos globais aplicados a todo o corpo do documento.
+  - font-family: Define a fonte padrão.
+  - line-height: Melhora a legibilidade do texto.
+  - color: Cor padrão do texto.
+  - background: Cria o fundo com gradiente para a página.
+  - min-height: Garante que o corpo ocupe pelo menos a altura inteira da tela.
+*/
+body {
+    font-family: 'Arial', sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background: linear-gradient(135deg, #2692a0 0%, #012e28 100%);
+    min-height: 100vh;
+    zoom: 1;
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+}
+
+
+/* --- HEADER E NAVEGAÇÃO PRINCIPAL --- */
+
+/* Estilização do cabeçalho (header) e Navegação.
+  - background + backdrop-filter: Criam o efeito de vidro (glassmorphism), com um fundo semitransparente e desfoque do conteúdo atrás.
+  - position: fixed: Mantém o header fixo no topo da página durante a rolagem.
+  - z-index: 1000: Garante que o header fique na frente da maioria dos outros elementos.
+  - transition: Anima suavemente qualquer mudança de propriedade (como a cor de fundo na rolagem).
+*/
+header {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 1rem 0;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+    transition: all 0.3s ease;
+}
+
+/* Estilo aplicado ao header via JavaScript quando o usuário rola a página para baixo.
+  Torna o fundo mais escuro e aumenta o desfoque para maior destaque.
+*/
+.header-scrolled {
+    background: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(20px);
+}
+
+/* Muda a cor dos links da navegação quando o header está no modo "rolado". */
+.header-scrolled nav ul li a {
+    color: #ffffff;
+}
+
+/* Muda a cor do logo quando o header está no modo "rolado". */
+.header-scrolled .logo {
+    color: #ffffff;
+}
+
+/* Estilo do Container geral/principal do header  para centralizar o conteúdo.
+  - max-width: Limita a largura do conteúdo em telas grandes.
+  - margin: 0 auto: Centraliza o container horizontalmente.
+*/
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+/* Define a navegação como um container flexbox.
+  - justify-content: space-between: Empurra o logo para a esquerda e os links do menu para a direita.
+  - align-items: center: Alinha verticalmente os itens no centro.
+  -Estilo do menu de navegação */
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Estilização do logodo site */
+.logo {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: white;
+    text-decoration: none;
+    transition: color 0.3s ease;
+    z-index: 1002;
+    position: relative;
+}
+
+/* Efeito de hover/mudança de cor ao passar o mouse sobre o logo. */
+.logo:hover {
+    color: #00ffc8;
+}
+
+/* Estilização da lista (<ul>) da navegação principal. */
+nav ul {
+    display: flex;
+    list-style: none;
+    gap: 2rem;
+}
+
+/* Estilização dos links (<a>) dentro da lista da navegação.
+  - position: relative: É crucial para que o pseudo-elemento `::after` (o sublinhado animado) se posicione em relação a este link.
+*/
+/* Estilo dos itens do menu de navegação */
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+/* Efeito ao passar o mouse: o link sobe um pouco e muda de cor. */
+/* Efeito de hover nos links do menu */
+nav ul li a:hover {
+    color: #00ffc8;
+    transform: translateY(-2px);
+}
+
+/* Cria um sublinhado animado usando um pseudo-elemento.
+  - content: ''; cria o elemento.
+  - position: absolute; posiciona-o em relação ao link (que é 'relative').
+  - width: 0; faz com que ele comece invisível.
+  - transition: width 0.3s ease; define que apenas a largura será animada suavemente.
+*/
+/* Efeito de sublinhado animado nos links do menu */
+nav ul li a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: -5px;
+    left: 0;
+    background-color: #00ffc8;
+    transition: width 0.3s ease;
+}
+
+/* Quando o mouse passa sobre o link, a largura do sublinhado vai a 100%, tornando-o visível. */
+/* Efeito de hover no sublinhado animado */
+nav ul li a:hover::after {
+    width: 100%;
+}
+
+
+/* --- MENU HAMBÚRGUER E MOBILE --- */
+
+/* Estilo do botão "hambúrguer" que aparece em telas menores.
+  - display: none; o esconde por padrão em desktops.
+  - cubic-bezier(...): Cria uma transição "elástica" para um efeito mais dinâmico.
+*/
+/* Estilo do menu hamburguer para dispositivos móveis */
+.menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.5rem;
+    cursor: pointer;
+    position: relative;
+    z-index: 1002;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+/* Efeito de hover no botão hambúrguer. */
+.menu-toggle:hover {
+    background: rgba(0, 255, 200, 0.1);
+    transform: scale(1.1);
+}
+
+/* Container que envolve as 3 linhas do ícone do hamburguer animado */
+.hamburger-icon {
+    position: relative;
+    width: 24px;
+    height: 20px;
+    display: inline-block;
+}
+
+/* Estilização de cada uma das 3 linhas (<span>) do ícone do hamburguer. */
+.hamburger-icon span {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: white;
+    border-radius: 2px;
+    transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+/* Posição da primeira linha do ícone do hamburguer */
+.hamburger-icon span:nth-child(1) {
+    top: 0;
+}
+
+/* Posição da segunda linha do meio centralizada do incone hamburguer*/
+.hamburger-icon span:nth-child(2) {
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+/* Posição da terceira linha inferior do ícone hamburguer */
+.hamburger-icon span:nth-child(3) {
+    bottom: 0;
+}
+
+/* Animação para transformar o ícone de hambúrguer em um "X" quando a classe .active é adicionada.
+  A primeira e a terceira linha são movidas para o centro e rotacionadas. A linha do meio some.
+*/
+.menu-toggle.active .hamburger-icon span:nth-child(1) {
+    top: 50%;
+    transform: translateY(-50%) rotate(45deg);
+    background: #ff6b6b;
+}
+
+/* Linha do meio desaparece quando menu está ativo */
+.menu-toggle.active .hamburger-icon span:nth-child(2) {
+    opacity: 0;
+    transform: translateY(-50%) scale(0);
+}
+
+.menu-toggle.active .hamburger-icon span:nth-child(3) {
+    bottom: 50%;
+    transform: translateY(50%) rotate(-45deg);
+    background: #ff6b6b;
+}
+
+.menu-toggle.active {
+    background: rgba(255, 107, 107, 0.1);
+    transform: scale(1.1) rotate(180deg);
+}
+
+/* Overlay do menu mobile. O fundo (overlay) que cobre a tela inteira quando o menu mobile está aberto.
+  - opacity: 0; e visibility: hidden; o mantêm invisível e não interativo por padrão.
+*/
+.mobile-menu-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(38, 146, 160, 0.95) 0%, rgba(1, 46, 40, 0.98) 100%);
+    backdrop-filter: blur(20px);
+    z-index: 1001;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    cursor: pointer;
+}
+
+/* Torna o overlay visível quando a classe .active é adicionada. */
+.mobile-menu-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* O container para o conteúdo (links) dentro do menu mobile. */
+.mobile-menu-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    cursor: default;
+}
+
+/* Cria um efeito de partículas sutis no fundo do menu usando um pseudo-elemento.
+  - pointer-events: none; garante que este fundo decorativo não interfira com os cliques nos links.
+*/
+.mobile-menu-overlay::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image:
+        radial-gradient(circle at 25% 25%, rgba(0, 255, 200, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 75% 75%, rgba(0, 255, 200, 0.05) 0%, transparent 50%),
+        radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.02) 0%, transparent 50%);
+    animation: particleFloat 15s infinite linear;
+    pointer-events: none;
+}
+
+/* Animação que faz as partículas de fundo flutuarem lentamente. */
+@keyframes particleFloat {
+    0% {
+        transform: translateY(0px) rotate(0deg);
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.5;
+    }
+
+    100% {
+        transform: translateY(-50px) rotate(360deg);
+        opacity: 1;
+    }
+}
+
+/* Botão de fechar do menu mobile. */
+.close-menu-btn {
+    position: absolute;
+    top: 2rem;
+    right: 2rem;
+    background: rgba(255, 107, 107, 0.2);
+    border: 2px solid #ff6b6b;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ff6b6b;
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    z-index: 1003;
+}
+
+.close-menu-btn:hover {
+    background: rgba(255, 107, 107, 0.3);
+    transform: scale(1.1) rotate(90deg);
+    box-shadow: 0 0 20px rgba(255, 107, 107, 0.4);
+}
+
+/* Lista de links dentro do menu mobile. */
+/* Lista do menu mobile */
+.mobile-menu-list {
+    list-style: none;
+    text-align: center;
+    padding: 0;
+    margin: 0;
+}
+
+/* Item individual da lista do menu.
+  - A animação `slideInLeft` é aplicada aqui.
+*/
+.mobile-menu-item {
+    margin: 1.5rem 0;
+    opacity: 0;
+    transform: translateX(-50px);
+    animation: slideInLeft 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+}
+
+/* Define um atraso de animação para cada item, criando um efeito escalonado (um aparece depois do outro).
+*/
+.mobile-menu-item:nth-child(1) {
+    animation-delay: 0.1s;
+}
+
+.mobile-menu-item:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.mobile-menu-item:nth-child(3) {
+    animation-delay: 0.3s;
+}
+
+.mobile-menu-item:nth-child(4) {
+    animation-delay: 0.4s;
+}
+
+.mobile-menu-item:nth-child(5) {
+    animation-delay: 0.5s;
+}
+
+/* Animação de entrada dos itens, que move da esquerda para a posição final. */
+@keyframes slideInLeft {
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Estilo dos links dentro do menu mobile. */
+.mobile-menu-link {
+    color: white;
+    text-decoration: none;
+    font-size: 2rem;
+    font-weight: 600;
+    display: block;
+    padding: 1rem 2rem;
+    border-radius: 15px;
+    position: relative;
+    transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    margin: 0 2rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+/* Cria um fundo animado para o hover, similar ao sublinhado da navegação principal. */
+.mobile-menu-link::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 100%;
+    background: linear-gradient(45deg, #00ffc8, #26a0a0);
+    border-radius: 15px;
+    transition: width 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    z-index: -1;
+}
+
+.mobile-menu-link:hover::before {
+    width: 100%;
+}
+
+.mobile-menu-link:hover {
+    color: #333;
+    transform: translateX(10px) scale(1.05);
+    box-shadow: 0 10px 30px rgba(0, 255, 200, 0.3);
+    border-color: #00ffc8;
+}
+
+/* Feedback visual ao clicar (pressionar) o link. */
+.mobile-menu-link:active {
+    transform: translateX(10px);
+}
+
+/* Informações de contato no rodapé do menu mobile.
+  - A animação `fadeInUp` faz com que apareça de baixo para cima.
+*/
+/* Informações de contato no menu mobile */
+.mobile-contact-info {
+    position: absolute;
+    bottom: 3rem;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    color: rgba(255, 255, 255, 0.8);
+    opacity: 0;
+    animation: fadeInUp 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55) 0.6s forwards;
+}
+
+/* Animação de entrada para as informações de contato. */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateX(-50%) translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+    }
+}
+
+.mobile-contact-info p {
+    margin: 0.5rem 0;
+    font-size: 0.9rem;
+}
+
+/* Links para redes sociais no menu mobile. */
+.mobile-social-links {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.mobile-social-link {
+    width: 40px;
+    height: 40px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.mobile-social-link:hover {
+    background: rgba(0, 255, 200, 0.2);
+    transform: scale(1.1);
+    color: #00ffc8;
+}
+
+
+/* --- SEÇÕES DE CONTEÚDO PRINCIPAL --- */
+/* Main Content */
+/* Estilo da tag <main> que contém todo o conteúdo principal da página.
+  - margin-top: 80px; cria um espaço no topo para que o conteúdo não comece escondido atrás do header fixo.
+*/
+main {
+    margin-top: 80px;
+    min-height: calc(100vh - 80px);
+}
+
+/* Hero Section - Página Inicial */
+/* Seção "Hero", a principal da página inicial.
+  - overflow: hidden; é importante para conter pseudo-elementos animados dentro dos limites da seção.
+*/
+.hero {
+    margin-top: 15vw;
+    height: calc(100% - 80px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: rgba(255, 255, 255, 0.781);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Fundo animado com partículas (definidas com SVG embutido). */
+.hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="20" cy="20" r="2" fill="rgba(255,255,255,0.1)"/><circle cx="80" cy="40" r="1.5" fill="rgba(255,255,255,0.1)"/><circle cx="40" cy="80" r="1" fill="rgba(255,255,255,0.1)"/></svg>');
+    animation: float 20s infinite linear;
+}
+
+/* Animação que faz o fundo de partículas flutuar. */
+@keyframes float {
+    0% {
+        transform: translateY(0px) rotate(0deg);
+    }
+
+    100% {
+        transform: translateY(-100px) rotate(360deg);
+    }
+}
+
+.hero-content {
+    z-index: 1;
+    position: relative;
+}
+
+/* Animações de entrada para o título, subtítulo e descrição do Hero, com atrasos diferentes para efeito escalonado. */
+.hero h1 {
+    font-size: 3.5rem;
+    margin-bottom: 1rem;
+    animation: slideInUp 1s ease-out;
+}
+
+.hero .subtitle {
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+    opacity: 0.9;
+    animation: slideInUp 1s ease-out 0.3s both;
+}
+
+.hero .description {
+    font-size: 1.1rem;
+    margin-bottom: 3rem;
+    max-width: 600px;
+    animation: slideInUp 1s ease-out 0.6s both;
+}
+
+/* Animação que faz os elementos "subirem" para a tela. */
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.cta-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    animation: slideInUp 1s ease-out 0.9s both;
+}
+
+/* Estilo geral para botões de "Chamada para Ação" (CTA).
+  - overflow: hidden; é essencial para a animação do fundo com `::before`.
+*/
+.btn {
+    padding: 12px 30px;
+    border: 2px solid #00ffc8;
+    background: transparent;
+    color: #00ffc8;
+    text-decoration: none;
+    border-radius: 50px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Cria um fundo que "desliza" para dentro ao passar o mouse. */
+.btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    /* Começa totalmente fora da área visível do botão. */
+    width: 100%;
+    height: 100%;
+    background: #00ffc8;
+    transition: left 0.3s ease;
+    z-index: -1;
+}
+
+.btn:hover::before {
+    left: 0;
+    /* Move o fundo para a posição 0, preenchendo o botão. */
+}
+
+.btn:hover {
+    color: #333;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 255, 234, 0.3);
+}
+
+/* Estilo geral para as seções (Sobre, Projetos, Contato).
+  - display: none; faz com que todas as seções fiquem escondidas por padrão.
+    O JavaScript é usado para adicionar a classe `.active` e mostrar a seção correta.
+*/
+.section {
+    padding: 4rem 0;
+    display: none;
+}
+
+.section.active {
+    display: block;
+}
+
+.section-title {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 3rem;
+    color: white;
+    position: relative;
+}
+
+/* Cria o sublinhado decorativo abaixo dos títulos de seção. */
+.section-title::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 3px;
+    background: #00ffc8;
+}
+
+
+/* --- SEÇÕES ESPECÍFICAS (SOBRE, PROJETOS, CONTATO) --- */
+
+/* Página Sobre */
+.about-content {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    padding: 3rem;
+    margin: 2rem 0;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.about-grid {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 3rem;
+    align-items: center;
+}
+
+.about-image {
+    text-align: center;
+}
+
+.profile-img {
+    width: 250px;
+    height: 250px;
+    border-radius: 50%;
+    background: linear-gradient(45deg, #2692a0 0%, #012e28 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 4rem;
+    color: #333;
+    margin: 0 auto;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.about-text {
+    color: white;
+}
+
+.about-text h3 {
+    font-size: 1.7rem;
+    margin-bottom: 1rem;
+    color: #00ffc8;
+}
+
+.about-text p {
+    margin-bottom: 1.5rem;
+    font-size: 1.1rem;
+    line-height: 1.7;
+}
+
+/* Grid responsivo para as habilidades. `auto-fit` cria colunas que se ajustam automaticamente. */
+.skills {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.skill-item {
+    background: rgba(0, 255, 170, 0.1);
+    padding: 1rem;
+    border-radius: 10px;
+    text-align: center;
+    border: 1px solid rgba(0, 255, 200, 0.3);
+}
+
+/* Classe para o container da foto quando uma imagem real é usada. */
+/* Nova classe específica para a foto de perfil */
+.profile-img.with-photo {
+    background: none;
+    overflow: hidden;
+}
+
+/* Estilo para a tag <img> da foto de perfil. */
+.profile-photo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    /* Garante que a imagem cubra o espaço sem distorcer. */
+    border-radius: 50%;
+    border: 4px solid #11b19b;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.profile-photo:hover {
+    transform: scale(1.05);
+    box-shadow: 0 15px 40px rgba(29, 255, 206, 0.4);
+}
+
+/* Página Projetos */
+/* Estilo da imagem de projetos */
+.profile-photo-project {
+    width: 100%;
+    height: 100%;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Nova classe específica para a foto de projetos*/
+.profile-img.with-photo-project {
+    background: none;
+    width: 35rem;
+    height: 12.5rem;
+}
+
+/* Grid responsivo para os cards de projetos. */
+.projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.project-card {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: transform 0.3s ease;
+}
+
+.project-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+.project-image {
+    height: 200px;
+    background: linear-gradient(195deg, #26a0a0, #157a6d);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3rem;
+    color: #333;
+}
+
+.project-info {
+    padding: 1.5rem;
+    color: white;
+}
+
+.project-info h3 {
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+    color: #27dabc;
+}
+
+.project-info p {
+    margin-bottom: 1rem;
+    line-height: 1.6;
+}
+
+/* Tags de tecnologia usadas no projeto. */
+.project-tech {
+    display: flex;
+    flex-wrap: wrap;
+    /* Permite que as tags quebrem para a próxima linha. */
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.tech-tag {
+    background: rgba(0, 255, 221, 0.2);
+    color: #15e7a8;
+    padding: 0.25rem 0.75rem;
+    border-radius: 15px;
+    font-size: 0.8rem;
+    border: 1px solid rgba(0, 255, 200, 0.3);
+}
+
+/* Página Contato */
+
+.a-links {
+    color: #ffffff;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.a-links:hover {
+    color: #00ffc8;
+    text-decoration: underline;
+}
+
+.a-links-project {
+    color: #00ffc8;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.a-links-project:hover {
+    color: #00ffc8;
+    text-decoration: underline;
+}
+
+.a-incon {
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.a-incon:hover {
+    text-decoration: none;
+}
+
+/* Grid que divide as informações de contato do formulário. */
+.contact-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    margin-top: 2rem;
+}
+
+.contact-info {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+    padding: 2rem;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: white;
+}
+
+.contact-item-email {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    border-radius: 10px;
+}
+
+.contact-item-email:hover {
+    border-color: #75cdff;
+    transform: scale(1.1);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+}
+
+.contact-item-email i {
+    width: 50px;
+    height: 50px;
+    color: white;
+    background: linear-gradient(-20deg, #0084ff, #00b5ff, #0084ff);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 1rem;
+    font-size: 1.2rem;
+}
+
+.contact-item-whatsapp {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    border-radius: 10px;
+}
+
+.contact-item-whatsapp:hover {
+    border-color: #0b6416;
+    transform: scale(1.1);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+}
+
+.contact-item-whatsapp i {
+    width: 50px;
+    height: 50px;
+    color: white;
+    background: linear-gradient(-20deg, #48ff00, #0b851b);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 1rem;
+    font-size: 1.2rem;
+}
+
+.contact-item-localization {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    border-radius: 10px;
+}
+
+.contact-item-localization:hover {
+    border-color: #bdbdbd;
+    transform: scale(1.1);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+}
+
+.contact-item-localization i {
+    width: 50px;
+    height: 50px;
+    color: rgb(255, 0, 0);
+    background: linear-gradient(-20deg, #c2c0c0, #ffffff, #d1d1d1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 1rem;
+    font-size: 1.2rem;
+}
+
+.contact-item-instagram {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    border-radius: 10px;
+}
+
+.contact-item-instagram:hover {
+    border-color: #b2b500;
+    transform: scale(1.1);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+}
+
+.contact-item-instagram i {
+    width: 50px;
+    height: 50px;
+    color: white;
+    background: linear-gradient(-45deg, #fbff00, #db7e31, #b82828c2, #772191, #8c00ff);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 1rem;
+    font-size: 1.2rem;
+}
+
+.contact-item-linkedin {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    border-radius: 10px;
+}
+
+.contact-item-linkedin:hover {
+    border-color: #0077b5;
+    transform: scale(1.1);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+}
+
+.contact-item-linkedin i {
+    width: 50px;
+    height: 50px;
+    color: white;
+    background: linear-gradient(135deg, #0077b5, #005885);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 1rem;
+    font-size: 1.2rem;
+}
+
+.contact-item-github {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    border-radius: 10px;
+}
+
+.contact-item-github:hover {
+    border-color: #0077b5;
+    transform: scale(1.1);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+}
+
+.contact-item-github i {
+    width: 50px;
+    height: 50px;
+    color: white;
+    background: linear-gradient(-745deg, #807a7a, #000, #222121, #807a7a, #000000, #807a7a);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 1rem;
+    font-size: 1.2rem;
+}
+
+/* Formulário de contato. */
+.contact-form {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+    padding: 2rem;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: white;
+    font-weight: 500;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    font-size: 1rem;
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+/* Estilo para quando um campo do formulário está em foco (selecionado). */
+.form-group input:focus,
+.form-group textarea:focus {
+    outline: none;
+    /* Remove a borda de foco padrão do navegador. */
+    border-color: #00ff9d;
+    box-shadow: 0 0 10px rgb(13, 155, 131);
+}
+
+.error-message {
+    color: #00ffbf;
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
+    display: none;
+}
+
+/* Rodapé/Footer */
+footer {
+    background: rgba(0, 0, 0, 0.3);
+    text-align: center;
+    padding: 2rem 0;
+    color: white;
+    margin-top: 3rem;
+}
+
+/* --- UTILITÁRIOS E MELHORIAS --- */
+
+/* Classe adicionada ao <body> via JavaScript para impedir a rolagem da página quando o menu mobile está aberto. */
+body.menu-open {
+    overflow: hidden;
+}
+
+/* Animações de entrada e saída para o overlay, para serem controladas via JS. */
+.mobile-menu-overlay.entering {
+    animation: overlayFadeIn 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+.mobile-menu-overlay.leaving {
+    animation: overlayFadeOut 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+@keyframes overlayFadeIn {
+    from {
+        opacity: 0;
+        backdrop-filter: blur(0px);
+        transform: scale(0.95);
+    }
+
+    to {
+        opacity: 1;
+        backdrop-filter: blur(20px);
+        transform: scale(1);
+    }
+}
+
+@keyframes overlayFadeOut {
+    from {
+        opacity: 1;
+        backdrop-filter: blur(20px);
+        transform: scale(1);
+    }
+
+    to {
+        opacity: 0;
+        backdrop-filter: blur(0px);
+        transform: scale(0.95);
+    }
+}
+
+/* Efeito de "pulso/pulse" que aparece atrás do botão menu toggle/hambúrguer no hover. */
+.menu-toggle::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: rgba(0, 255, 200, 0.2);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: all 0.3s ease;
+    z-index: -1;
+}
+
+.menu-toggle:hover::after {
+    width: 60px;
+    height: 60px;
+}
+
+/* Efeito de "onda" (ripple) para feedback de clique no overlay para fechar. */
+.mobile-menu-overlay.ripple::after {
+    content: '';
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    transform: scale(0);
+    animation: rippleEffect 0.6s ease-out;
+    pointer-events: none;
+}
+
+@keyframes rippleEffect {
+    to {
+        transform: scale(4);
+        opacity: 0;
+    }
+}
+
+/* Melhoria na tipografia do menu mobile para maior legibilidade. */
+.mobile-menu-link {
+    font-family: 'Arial', sans-serif;
+    font-weight: 700;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* Estilos de foco para acessibilidade (navegação via teclado). */
+.menu-toggle:focus {
+    outline: 2px solid #00ffc8;
+    outline-offset: 2px;
+}
+
+.mobile-menu-link:focus {
+    outline: 2px solid #00ffc8;
+    outline-offset: 4px;
+}
+
+.close-menu-btn:focus {
+    outline: 2px solid #ff6b6b;
+    outline-offset: 2px;
+}
+
+/* Indicador de carregamento (spinner). */
+.mobile-menu-overlay.loading .mobile-menu-container {
+    opacity: 0.5;
+}
+
+.mobile-menu-overlay.loading .mobile-menu-container::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 50px;
+    height: 50px;
+    border: 3px solid rgba(0, 255, 200, 0.3);
+    border-top: 3px solid #00ffc8;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: translate(-50%, -50%) rotate(0deg);
+    }
+
+    100% {
+        transform: translate(-50%, -50%) rotate(360deg);
+    }
+}
+
+/* Gradiente de fundo animado para o menu mobile. */
+.mobile-menu-overlay {
+    background: linear-gradient(-45deg,
+            rgba(38, 146, 160, 0.95),
+            rgba(1, 46, 40, 0.98),
+            rgba(26, 160, 160, 0.95),
+            rgba(1, 30, 40, 0.98));
+    background-size: 400% 400%;
+    animation: gradientShift 8s ease infinite;
+}
+
+@keyframes gradientShift {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+/* Efeito de cristal/vidro mais pronunciado nos links do menu. */
+.mobile-menu-link {
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow:
+        0 8px 32px rgba(0, 0, 0, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+
+/* --- RESPONSIVIDADE --- */
+
+/* Media Query para telas menores que 768px (tablets em modo retrato e celulares).
+  Aqui, o menu de navegação de desktop é escondido e o botão hambúrguer é mostrado.
+  Grids de duas colunas passam para uma coluna.
+*/
+/* Responsividade */
+@media (max-width: 768px) and (orientation: portrait) {
+    .menu-toggle {
+        display: block;
+    }
+
+    nav ul {
+        display: none;
+    }
+
+    .logo {
+        font-size: 1.5rem;
+        margin-top: 1rem;
+    }
+
+    .hero h1 {
+        font-size: 2.5rem;
+    }
+
+    .hero .subtitle {
+        font-size: 1.2rem;
+    }
+
+    .cta-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .about-grid {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+
+    .contact-content {
+        grid-template-columns: 1fr;
+    }
+
+    .container {
+        padding: 0 1rem;
+    }
+
+    .section {
+        padding: 2rem 0;
+    }
+}
+
+/* Mobile Paisagem - Geral. Media Query para telas com pouca altura (celulares em modo paisagem). */
+@media screen and (max-height: 500px) and (orientation: landscape) {
+    .menu-toggle {
+        display: none !important;
+    }
+
+    nav ul {
+        display: flex !important;
+    }
+
+    /* Remove bordas brancas */
+    body {
+        width: 100vw;
+        overflow-x: hidden;
+    }
+
+    .container {
+        max-width: 100%;
+        padding: 0 1rem;
+    }
+
+    .hero h1 {
+        font-size: 2.95rem;
+    }
+
+}
+
+/* Media Query mais específica para dispositivos como o iPhone SE em modo paisagem. */
+@media screen and (max-width: 736px) and (max-height: 414px) and (orientation: landscape) {
+    .contact-content-container {
+        display: flex;
+        flex-direction: column !important;
+        align-items: center;
+    }
+
+    .contact-content {
+        width: 100%;
+        padding: 1rem;
+        display: flex;
+        flex-direction: column !important;
+    }
+
+    .contact-info,
+    .contact-form {
+        width: 100% !important;
+        display: block !important;
+        float: none !important;
+    }
+}
+
+/* Media Query para telas estreitas (celulares menores). */
+@media (max-width: 480px) {
+    .mobile-menu-link {
+        font-size: 1.5rem;
+        padding: 0.8rem 1.5rem;
+        margin: 0 1rem;
+    }
+
+    .hero h1 {
+        font-size: 1.5rem;
+    }
+
+    .about-text h3 {
+        font-size: 1.57rem;
+    }
+
+    .profile-img {
+        width: 200px;
+        height: 200px;
+        font-size: 3rem;
+    }
+
+    .projects-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .profile-img.with-photo {
+        overflow: hidden;
+    }
+
+
+    .profile-img.with-photo-project {
+        background: none;
+        width: 25rem;
+        height: 12.5rem;
+    }
+
+    .p-footer {
+        font-size: 0.7rem;
+        white-space-collapse: nowrap;
+    }
+
+    .logo {
+        font-size: 1.3rem;
+    }
+
+    .close-menu-btn {
+        top: 1.5rem;
+        right: 1.5rem;
+        width: 45px;
+        height: 45px;
+    }
+
+    .contact-info {
+        font-size: 80%;
+    }
+
+    .contact-item-email,
+    .contact-item-whatsapp,
+    .contact-item-localization,
+    .contact-item-instagram,
+    .contact-item-linkedin,
+    .contact-item-github {
+        font-size: 75%;
+    }
+
+    .mobile-contact-info {
+        bottom: 2rem;
+    }
+}
+
+/* Media Query/Responsividade extra para dispositivos muito pequenos. */
+@media (max-width: 320px) {
+    .mobile-menu-link {
+        font-size: 1.3rem;
+        padding: 0.7rem 1rem;
+        margin: 0 0.5rem;
+        letter-spacing: 1px;
+    }
+
+    .close-menu-btn {
+        width: 40px;
+        height: 40px;
+        top: 1rem;
+        right: 1rem;
+    }
+
+    .mobile-contact-info {
+        bottom: 1.5rem;
+        font-size: 0.8rem;
+    }
+
+    .mobile-social-link {
+        width: 35px;
+        height: 35px;
+    }
+
+    .profile-img.with-photo-project {
+        background: none;
+        width: 20rem;
+        height: 12.5rem;
+    }
+}
+
+/* --- ESTILOS ESPECÍFICOS PARA APPLE WATCH --- */
+
+/* Apple Watch 40mm e 44mm Media Queries */
+
+/* Media Query para telas extremamente pequenas, como a de um Apple Watch de 40mm.
+  Os estilos aqui são muito agressivos para garantir que o layout seja minimamente utilizável.
+*/
+/* Apple Watch 40mm (162x197px) */
+@media (max-width: 162px) and (max-height: 197px) {
+
+    /* Reset básico para watch */
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-size: 10px;
+        overflow-x: hidden;
+        background: linear-gradient(135deg, #2692a0 0%, #012e28 100%);
+        min-height: 100vh;
+    }
+
+    /* Header com logo e menu hamburguer */
+    header {
+        background: rgba(0, 0, 0, 0.8);
+        backdrop-filter: blur(5px);
+        padding: 4px 0;
+        position: fixed;
+        width: 100%;
+        top: 0;
+        z-index: 1000;
+        height: 30px;
+    }
+
+    .container {
+        max-width: 100%;
+        padding: 0 5px;
+        height: 100%;
+    }
+
+    nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: 22px;
+    }
+
+    /* Logo responsivo para watch */
+    .logo {
+        display: block;
+        color: #00ffc8;
+        font-size: 8px;
+        font-weight: bold;
+        text-decoration: none;
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
+        flex: 1;
+        text-align: left;
+    }
+
+    /* Menu normal SEMPRE escondido no watch */
+    nav ul,
+    .nav-links {
+        display: none !important;
+    }
+
+    /* Botão hamburguer SEMPRE visível */
+    .menu-toggle {
+        display: block !important;
+        background: rgba(0, 255, 200, 0.2);
+        border: 1px solid #00ffc8;
+        border-radius: 50%;
+        width: 22px;
+        height: 22px;
+        color: white;
+        font-size: 8px;
+        cursor: pointer;
+        position: relative;
+        z-index: 1002;
+        transition: all 0.2s ease;
+        flex-shrink: 0;
+        outline: none;
+    }
+
+    .menu-toggle:hover,
+    .menu-toggle:active {
+        background: rgba(0, 255, 200, 0.4);
+        transform: scale(1.1);
+    }
+
+    /* Ícone hamburguer reduzido */
+    .hamburger-icon {
+        width: 12px;
+        height: 10px;
+        display: inline-block;
+        position: relative;
+    }
+
+    .hamburger-icon span {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 8px;
+        height: 1px;
+        background: white;
+        border-radius: 1px;
+        transition: all 0.2s ease;
+    }
+
+    .hamburger-icon span:nth-child(1) {
+        top: 2px;
+    }
+
+    .hamburger-icon span:nth-child(2) {
+        top: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    .hamburger-icon span:nth-child(3) {
+        bottom: 2px;
+    }
+
+    /* Animação X quando ativo */
+    .menu-toggle.active .hamburger-icon span:nth-child(1) {
+        top: 50%;
+        transform: translate(-50%, -50%) rotate(45deg);
+        background: #ff6b6b;
+    }
+
+    .menu-toggle.active .hamburger-icon span:nth-child(2) {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0);
+    }
+
+    .menu-toggle.active .hamburger-icon span:nth-child(3) {
+        bottom: 50%;
+        transform: translate(-50%, 50%) rotate(-45deg);
+        background: #ff6b6b;
+    }
+
+    /* Menu overlay adaptado para watch */
+    .mobile-menu-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, rgba(38, 146, 160, 0.98) 0%, rgba(1, 46, 40, 0.99) 100%);
+        backdrop-filter: blur(10px);
+        z-index: 1001;
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s ease;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .mobile-menu-overlay.active {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    /* Container do menu com scroll */
+    .mobile-menu-container {
+        position: relative;
+        width: 100%;
+        min-height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+        padding: 35px 8px 20px 8px;
+    }
+
+    /* Botão fechar minimalista */
+    .close-menu-btn {
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        background: rgba(255, 107, 107, 0.3);
+        border: 1px solid #ff6b6b;
+        border-radius: 50%;
+        width: 20px;
+        height: 20px;
+        color: #ff6b6b;
+        font-size: 10px;
+        cursor: pointer;
+        z-index: 1003;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        outline: none;
+    }
+
+    /* Lista do menu otimizada para watch */
+    .mobile-menu-list {
+        list-style: none;
+        text-align: center;
+        padding: 0;
+        margin: 0;
+        width: 100%;
+    }
+
+    .mobile-menu-item {
+        margin: 8px 0;
+        opacity: 0;
+        transform: translateX(-20px);
+        animation: slideInLeft 0.4s ease forwards;
+    }
+
+    .mobile-menu-item:nth-child(1) {
+        animation-delay: 0.1s;
+    }
+
+    .mobile-menu-item:nth-child(2) {
+        animation-delay: 0.15s;
+    }
+
+    .mobile-menu-item:nth-child(3) {
+        animation-delay: 0.2s;
+    }
+
+    .mobile-menu-item:nth-child(4) {
+        animation-delay: 0.25s;
+    }
+
+    .mobile-menu-item:nth-child(5) {
+        animation-delay: 0.3s;
+    }
+
+    /* Links do menu compactos */
+    .mobile-menu-link {
+        color: white;
+        text-decoration: none;
+        font-size: 11px;
+        font-weight: 600;
+        display: block;
+        padding: 8px 12px;
+        border-radius: 8px;
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        backdrop-filter: blur(5px);
+        margin: 0 4px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        transition: all 0.2s ease;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .mobile-menu-link::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(45deg, #00ffc8, #26a0a0);
+        border-radius: 8px;
+        transition: left 0.3s ease;
+        z-index: -1;
+    }
+
+    .mobile-menu-link:hover::before,
+    .mobile-menu-link:active::before {
+        left: 0;
+    }
+
+    .mobile-menu-link:hover,
+    .mobile-menu-link:active {
+        color: #333;
+        transform: scale(1.02);
+        box-shadow: 0 4px 12px rgba(0, 255, 200, 0.3);
+    }
+
+    /* Main content ajustado */
+    main {
+        margin-top: 30px;
+        min-height: calc(100vh - 30px);
+        padding: 8px;
+    }
+
+    /* Hero section compacta */
+    .hero {
+        margin-top: 10px;
+        height: auto;
+        min-height: calc(100vh - 50px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        color: white;
+        padding: 15px 5px;
+    }
+
+    .hero-content {
+        z-index: 1;
+        position: relative;
+    }
+
+    .hero h1 {
+        font-size: 11px;
+        margin-bottom: 8px;
+        line-height: 1.2;
+    }
+
+    .hero .subtitle {
+        font-size: 10px;
+        margin-bottom: 12px;
+        opacity: 0.9;
+        line-height: 1.3;
+    }
+
+    .hero .description {
+        font-size: 8px;
+        margin-bottom: 15px;
+        max-width: 140px;
+        line-height: 1.4;
+    }
+
+    /* Botões CTA adaptados */
+    .cta-buttons {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        align-items: center;
+    }
+
+    .btn {
+        padding: 6px 12px;
+        border: 1px solid #00ffc8;
+        background: transparent;
+        color: #00ffc8;
+        text-decoration: none;
+        border-radius: 15px;
+        font-weight: bold;
+        font-size: 8px;
+        transition: all 0.2s ease;
+        position: relative;
+        overflow: hidden;
+        width: 80px;
+        text-align: center;
+    }
+
+    .btn:hover,
+    .btn:active {
+        background: #00ffc8;
+        color: #333;
+        transform: scale(1.05);
+    }
+
+    /* Seções gerais - ESCONDIDAS por padrão */
+    .section {
+        padding: 15px 0;
+        display: none;
+    }
+
+    .section.active {
+        display: block;
+    }
+
+    /* Seção HOME sempre visível inicialmente */
+    .section#home {
+        display: block;
+    }
+
+    .section-title {
+        text-align: center;
+        font-size: 12px;
+        margin-bottom: 12px;
+        color: white;
+        position: relative;
+    }
+
+    .section-title::after {
+        content: '';
+        position: absolute;
+        bottom: -3px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 30px;
+        height: 1px;
+        background: #00ffc8;
+    }
+
+    /* Página Sobre compacta */
+    .about-content {
+        background: rgba(255, 255, 255, 0.15);
+        backdrop-filter: blur(5px);
+        border-radius: 8px;
+        padding: 12px;
+        margin: 8px 0;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    /* Grid de informações sobre mim */
+    .about-grid {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        align-items: center;
+    }
+
+    /* Imagem de perfil */
+    .profile-img {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        background: linear-gradient(45deg, #2692a0 0%, #012e28 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 20px;
+        color: #333;
+        margin: 0 auto 8px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Imagem de perfil com foto */
+    .profile-img.with-photo {
+        background: none;
+        overflow: hidden;
+    }
+
+    /* Foto de perfil dentro da imagem */
+    .profile-photo {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 50%;
+        border: 2px solid #11b19b;
+    }
+
+    /* Texto sobre mim */
+    .about-text {
+        color: white;
+        text-align: center;
+    }
+
+    /* Título sobre mim */
+    .about-text h3 {
+        font-size: 10px;
+        margin-bottom: 6px;
+        color: #00ffc8;
+    }
+
+    .about-text p {
+        margin-bottom: 8px;
+        font-size: 7px;
+        line-height: 1.4;
+    }
+
+    /* Skills em lista compacta */
+    .skills {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 4px;
+        margin-top: 8px;
+        justify-content: center;
+    }
+
+    .skill-item {
+        background: rgba(0, 255, 170, 0.15);
+        padding: 4px 6px;
+        border-radius: 4px;
+        text-align: center;
+        border: 1px solid rgba(0, 255, 200, 0.3);
+        font-size: 6px;
+    }
+
+    /* Projetos adaptados */
+    .projects-grid {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        margin-top: 8px;
+    }
+
+    .project-card {
+        background: rgba(255, 255, 255, 0.15);
+        backdrop-filter: blur(5px);
+        border-radius: 6px;
+        overflow: hidden;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .project-image {
+        height: 40px;
+        background: linear-gradient(195deg, #26a0a0, #157a6d);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 16px;
+        color: #333;
+    }
+
+    .profile-img.with-photo-project {
+        background: none;
+        width: 100%;
+        height: 50px;
+        border-radius: 0;
+    }
+
+    .profile-photo-project {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 0;
+    }
+
+    .project-info {
+        padding: 8px;
+        color: white;
+    }
+
+    .project-info h3 {
+        font-size: 8px;
+        margin-bottom: 4px;
+        color: #27dabc;
+    }
+
+    .project-info p {
+        margin-bottom: 4px;
+        line-height: 1.3;
+        font-size: 6px;
+    }
+
+    .project-tech {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 2px;
+        margin-bottom: 4px;
+    }
+
+    .tech-tag {
+        background: rgba(0, 255, 221, 0.2);
+        color: #15e7a8;
+        padding: 1px 4px;
+        border-radius: 4px;
+        font-size: 5px;
+        border: 1px solid rgba(0, 255, 200, 0.3);
+    }
+
+    /* Contato compacto */
+    .contact-content {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        margin-top: 8px;
+    }
+
+    .contact-info {
+        background: rgba(255, 255, 255, 0.15);
+        backdrop-filter: blur(5px);
+        border-radius: 6px;
+        padding: 8px;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        color: white;
+    }
+
+    .contact-item-email,
+    .contact-item-whatsapp,
+    .contact-item-localization,
+    .contact-item-instagram,
+    .contact-item-linkedin,
+    .contact-item-github {
+        display: flex;
+        align-items: center;
+        margin-bottom: 6px;
+        border-radius: 4px;
+        font-size: 6px;
+    }
+
+    .contact-item-email i,
+    .contact-item-whatsapp i,
+    .contact-item-localization i,
+    .contact-item-instagram i,
+    .contact-item-linkedin i,
+    .contact-item-github i {
+        width: 16px;
+        height: 16px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 6px;
+        font-size: 8px;
+    }
+
+    /* Form compacto */
+    .contact-form {
+        background: rgba(255, 255, 255, 0.15);
+        backdrop-filter: blur(5px);
+        border-radius: 6px;
+        padding: 8px;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .form-group {
+        margin-bottom: 6px;
+    }
+
+    .form-group label {
+        display: block;
+        margin-bottom: 2px;
+        color: white;
+        font-weight: 500;
+        font-size: 7px;
+    }
+
+    .form-group input,
+    .form-group textarea {
+        width: 100%;
+        padding: 4px;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        border-radius: 3px;
+        background: rgba(255, 255, 255, 0.1);
+        color: white;
+        font-size: 7px;
+    }
+
+    /* Footer minimalista */
+    footer {
+        background: rgba(0, 0, 0, 0.3);
+        text-align: center;
+        padding: 8px 0;
+        color: white;
+        margin-top: 12px;
+    }
+
+    .p-footer {
+        font-size: 5px;
+        margin: 0;
+    }
+
+    /* Remove informações de contato do menu overlay no watch */
+    .mobile-contact-info {
+        display: none;
+    }
+
+    /* Animações otimizadas */
+    @keyframes slideInLeft {
+        to {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+
+    /* Scroll suave */
+    .mobile-menu-overlay {
+        scroll-behavior: smooth;
+    }
+
+    /* Otimizações de performance */
+    * {
+        -webkit-tap-highlight-color: transparent;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        user-select: none;
+    }
+
+    input,
+    textarea {
+        -webkit-user-select: text;
+        user-select: text;
+    }
+}
+
+
+/* Media Query para telas um pouco maiores, como a de um Apple Watch de 44mm.
+  A maioria dos estilos é herdada da media query anterior (40mm), com pequenos ajustes de tamanho.
+*/
+/* Apple Watch 44mm (184x224px) */
+@media (min-width: 163px) and (max-width: 184px) and (min-height: 198px) and (max-height: 224px) {
+    /* Herda todas as regras do 40mm mas com ligeiros ajustes */
+
+    /* Header um pouco maior */
+    header {
+        height: 32px;
+        padding: 5px 0;
+    }
+
+    /* Logo responsivo maior para 44mm */
+    .logo {
+        font-size: 9px;
+    }
+
+    .menu-toggle {
+        width: 24px;
+        height: 24px;
+        font-size: 9px;
+    }
+
+    .hamburger-icon {
+        width: 14px;
+        height: 12px;
+    }
+
+    .hamburger-icon span {
+        width: 10px;
+        height: 1.5px;
+    }
+
+    /* Main content ajustado */
+    main {
+        margin-top: 32px;
+        min-height: calc(100vh - 32px);
+        padding: 10px;
+    }
+
+    /* Hero um pouco maior */
+    .hero h1 {
+        font-size: 16px;
+        margin-bottom: 10px;
+    }
+
+    .hero .subtitle {
+        font-size: 12px;
+        margin-bottom: 14px;
+    }
+
+    .hero .description {
+        font-size: 9px;
+        margin-bottom: 18px;
+        max-width: 160px;
+    }
+
+    /* Botões ligeiramente maiores */
+    .btn {
+        padding: 7px 14px;
+        font-size: 9px;
+        width: 90px;
+    }
+
+    /* Menu links maiores */
+    .mobile-menu-link {
+        font-size: 12px;
+        padding: 9px 14px;
+        margin: 0 6px;
+    }
+
+    /* Container do menu com mais padding */
+    .mobile-menu-container {
+        padding: 40px 10px 25px 10px;
+    }
+
+    /* Botão fechar maior */
+    .close-menu-btn {
+        width: 22px;
+        height: 22px;
+        font-size: 11px;
+        top: 6px;
+        right: 6px;
+    }
+
+    /* Profile image maior */
+    .profile-img {
+        width: 70px;
+        height: 70px;
+        font-size: 24px;
+    }
+
+    /* Textos ligeiramente maiores */
+    .about-text h3 {
+        font-size: 11px;
+    }
+
+    .about-text p {
+        font-size: 8px;
+    }
+
+    .skill-item {
+        font-size: 7px;
+        padding: 5px 7px;
+    }
+
+    /* Projeto info maior */
+    .project-info h3 {
+        font-size: 9px;
+    }
+
+    .project-info p {
+        font-size: 7px;
+    }
+
+    .tech-tag {
+        font-size: 6px;
+        padding: 2px 5px;
+    }
+
+    /* Contato maior */
+    .contact-item-email,
+    .contact-item-whatsapp,
+    .contact-item-localization,
+    .contact-item-instagram,
+    .contact-item-linkedin,
+    .contact-item-github {
+        font-size: 7px;
+    }
+
+    .contact-item-email i,
+    .contact-item-whatsapp i,
+    .contact-item-localization i,
+    .contact-item-instagram i,
+    .contact-item-linkedin i,
+    .contact-item-github i {
+        width: 18px;
+        height: 18px;
+        font-size: 9px;
+        margin-right: 7px;
+    }
+
+    /* Form ligeiramente maior */
+    .form-group label {
+        font-size: 8px;
+    }
+
+    .form-group input,
+    .form-group textarea {
+        font-size: 8px;
+        padding: 5px;
+    }
+
+    /* Footer maior */
+    .p-footer {
+        font-size: 6px;
+    }
+
+    /* Section title maior */
+    .section-title {
+        font-size: 13px;
+        margin-bottom: 14px;
+    }
+
+    .section-title::after {
+        width: 35px;
+        height: 1.5px;
+    }
+
+
+}
+
+/* --- MELHORIAS FINAIS --- */
+
+/* Impede que o usuário selecione o texto dentro do overlay do menu. */
+.mobile-menu-overlay {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+/* Dica de otimização para o navegador.
+  `will-change` informa ao navegador quais propriedades provavelmente serão animadas, permitindo que ele otimize o desempenho. Melhoria na performance com will-change */
+.mobile-menu-overlay,
+.mobile-menu-item,
+.mobile-menu-link,
+.hamburger-icon span {
+    will-change: transform, opacity;
+}
+
+/* Estilos para um estado de erro visual no menu ou Estados de loading e erro */
+.mobile-menu-overlay.error {
+    background: linear-gradient(135deg, rgba(255, 107, 107, 0.1) 0%, rgba(139, 0, 0, 0.2) 100%);
+}
+
+.mobile-menu-overlay.error .mobile-menu-link {
+    border-color: rgba(255, 107, 107, 0.3);
+    color: rgba(255, 255, 255, 0.7);
+}
+
+/* Animação de "pulso" para feedback de sucesso quando um link é clicado. */
+.mobile-menu-link.clicked {
+    animation: successPulse 0.6s ease-out;
+}
+
+@keyframes successPulse {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.05);
+        background: rgba(0, 255, 200, 0.3);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
