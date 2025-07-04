@@ -28,7 +28,7 @@ O projeto é organizado de forma modular para facilitar a manutenção e escalab
 
 ```bash
 /
-├── index.html # Página principal/inicial
+├── index.html # Página principal/"inicial"
 ├── sobre.html # Página "Sobre mim"
 ├── projetos.html # Página de "Projetos"
 ├── contato.html # Página de "Contato"
