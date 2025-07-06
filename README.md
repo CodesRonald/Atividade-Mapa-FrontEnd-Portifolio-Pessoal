@@ -53,11 +53,11 @@ Como este é um projeto front-end estático, você não precisa de nenhuma ferra
 
 1.  Clone o repositório:
     ```bash
-    git clone [https://github.com/CodesRonald/nome-do-seu-repositorio.git](https://github.com/CodesRonald/nome-do-seu-repositorio.git)
+    git clone [https://github.com/CodesRonald/Atividade-Mapa-FrontEnd-Portifolio-Pessoal.git](https://github.com/CodesRonald/Atividade-Mapa-FrontEnd-Portifolio-Pessoal.git)
     ```
 2.  Navegue até o diretório do projeto:
     ```bash
-    cd nome-do-seu-repositorio
+    cd Atividade-Mapa-FrontEnd-Portifolio-Pessoal
     ```
 3.  Abra o arquivo `index.html` no seu navegador de preferência.
 
